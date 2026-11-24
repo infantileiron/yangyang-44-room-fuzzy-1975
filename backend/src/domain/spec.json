@@ -61,5 +61,16 @@
       "max": 99,
       "default": 65
     }
+  ],
+  "comparison_parameters": [
+    {
+      "key": "tolerance",
+      "label": "中心承接阈值（秒）",
+      "type": "number",
+      "min": 0.01,
+      "max": 1,
+      "default": 0.15,
+      "help": "新旧簇中心距不超过该值才允许一对一承接；共同试音新旧中心在此距离内但归属对不上时标待核。"
+    }
   ]
 }

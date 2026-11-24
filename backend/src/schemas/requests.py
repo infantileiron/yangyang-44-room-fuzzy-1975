@@ -34,6 +34,12 @@ class ReviewInput(BaseModel):
         return value.strip()
 
 
+class CreateComparison(BaseModel):
+    baseline_run_id: int = Field(gt=0)
+    candidate_run_id: int = Field(gt=0)
+    parameters: dict = Field(default_factory=dict)
+
+
 class ScheduleInput(BaseModel):
     run_id: int = Field(gt=0)
     recipient: str = Field(min_length=2, max_length=100)

@@ -41,6 +41,20 @@ class Review(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, default=utc_now)
 
 
+class Comparison(Base):
+    __tablename__ = 'comparisons'
+    __table_args__ = (UniqueConstraint('baseline_run_id', 'snapshot_key', 'params_key', name='uq_comparison_identity'),)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    baseline_run_id: Mapped[int] = mapped_column(ForeignKey('analysis_runs.id'), index=True)
+    candidate_run_id: Mapped[int] = mapped_column(ForeignKey('analysis_runs.id'), index=True)
+    snapshot_key: Mapped[str] = mapped_column(String(64))
+    params_key: Mapped[str] = mapped_column(String(64))
+    parameters: Mapped[dict] = mapped_column(JSON)
+    result: Mapped[dict] = mapped_column(JSON)
+    created_by: Mapped[str] = mapped_column(String(60))
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=utc_now)
+
+
 class Schedule(Base):
     __tablename__ = 'schedules'
     id: Mapped[int] = mapped_column(primary_key=True)

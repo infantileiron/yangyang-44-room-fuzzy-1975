@@ -20,6 +20,14 @@ def observation_view(item):
     return {'id': item.id, 'data': item.payload, 'created_at': timestamp(item.created_at)}
 
 
+def comparison_view(item, *, include_result=False):
+    view = {'id': item.id, 'baseline_run_id': item.baseline_run_id, 'candidate_run_id': item.candidate_run_id,
+            'parameters': item.parameters, 'created_by': item.created_by, 'created_at': timestamp(item.created_at)}
+    if include_result:
+        view['result'] = item.result
+    return view
+
+
 def schedule_view(item):
     return {'id': item.id, 'run_id': item.run_id, 'recipient': item.recipient,
             'interval_minutes': item.interval_minutes, 'next_at': timestamp(item.next_at), 'active': item.active}

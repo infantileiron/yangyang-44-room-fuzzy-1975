@@ -52,7 +52,7 @@ def _shown(value, places=2):
     return "—" if value is None else round(float(value), places)
 
 
-def _output(headline, summary, columns, rows, metrics, chart_name, chart_unit, chart_data):
+def _output(headline, summary, columns, rows, metrics, chart_name, chart_unit, chart_data, clusters):
     return {
         "headline": headline,
         "summary": summary,
@@ -63,6 +63,7 @@ def _output(headline, summary, columns, rows, metrics, chart_name, chart_unit, c
             "label": chart_name, "unit": chart_unit,
             "points": [{"label": str(label), "value": value} for label, value in chart_data],
         },
+        "clusters": clusters,
     }
 
 
@@ -102,6 +103,8 @@ def analyze(rows, parameters):
     order = sorted(range(count), key=lambda i: (sum(centers[i]), *centers[i]))
     membership = _memberships(points, centers[order], fuzz)
     labels = [f"混响簇 {i+1}" for i in range(count)]
+    clusters = [{"label": labels[i], "low": round(float(centers[order][i][0]), 4),
+                 "mid": round(float(centers[order][i][1]), 4)} for i in range(count)]
     detail = []
     for row, weights in zip(rows, membership):
         leader = int(np.argmax(weights))
@@ -116,7 +119,7 @@ def analyze(rows, parameters):
                    COLUMNS, sorted(detail, key=lambda row: (row["weight"], row["ticket"])),
                    [("已归类试音", len(detail), "次"), ("边界试音", border, "次"),
                     ("加权归属集中度", _shown(float((membership**2).sum()) / len(rows), 4), "")],
-                   "优势归属分布", "次", [(label, counts[label]) for label in labels])
+                   "优势归属分布", "次", [(label, counts[label]) for label in labels], clusters)
 
 
 def seed():
