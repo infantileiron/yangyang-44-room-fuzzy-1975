@@ -1,0 +1,65 @@
+{
+  "organization": "苔壁社区广播工场（14 人）",
+  "tagline": "同时考虑低频和中频混响，给每间布置的试音记录分配多组归属度。",
+  "source": "《试音间脉冲衰减_11月.csv》与布置记录",
+  "record_name": "脉冲试音单",
+  "algorithm": "模糊 C 均值与归属不确定度",
+  "formula": "以 125 Hz 和 1000 Hz 的 RT60（秒）估计聚类，迭代用 uᵐ 权重更新中心，再由到各中心距离的倒幂更新归属度。最高归属度低于复测门槛的保留为边界。",
+  "decision_prompt": "哪些布置属于吸声边界，切换直播用途前应该复测哪几组？",
+  "fields": [
+    {
+      "key": "ticket",
+      "label": "试音编号",
+      "type": "text",
+      "example": "TB-X02"
+    },
+    {
+      "key": "room",
+      "label": "布置编号",
+      "type": "text",
+      "example": "帘幕 2 号"
+    },
+    {
+      "key": "low",
+      "label": "125 Hz RT60（秒）",
+      "type": "number",
+      "example": 0.62,
+      "min": 0.05,
+      "max": 5
+    },
+    {
+      "key": "mid",
+      "label": "1000 Hz RT60（秒）",
+      "type": "number",
+      "example": 0.55,
+      "min": 0.05,
+      "max": 5
+    }
+  ],
+  "parameters": [
+    {
+      "key": "clusters",
+      "label": "混响分型数",
+      "type": "integer",
+      "min": 2,
+      "max": 6,
+      "default": 3
+    },
+    {
+      "key": "fuzz",
+      "label": "模糊系数 m",
+      "type": "number",
+      "min": 1.2,
+      "max": 4,
+      "default": 2
+    },
+    {
+      "key": "cutoff",
+      "label": "边界复测门槛（%）",
+      "type": "number",
+      "min": 34,
+      "max": 99,
+      "default": 65
+    }
+  ]
+}

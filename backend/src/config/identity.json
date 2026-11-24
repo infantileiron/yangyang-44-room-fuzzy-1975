@@ -1,0 +1,14 @@
+{
+  "slug": "yangyang-44-room-fuzzy",
+  "title": "苔壁演播·试音间混响分型",
+  "direction": "软聚类与边界工况",
+  "layout": "rail",
+  "theme": "苔灰色吸声材料册",
+  "recipient": "试音与吸声组",
+  "work_modules": [
+    "脉冲试音单",
+    "模糊中心与归属度",
+    "边界工况复测"
+  ],
+  "follow_latest": false
+}
